@@ -53,7 +53,7 @@ public class GreetingController {
     public ResponseEntity<String> deleteGreeting(@PathVariable Long id) {
         if (greetingRepository.existsById(id)) {
             greetingRepository.deleteById(id);
-            return ResponseEntity.ok("Greeting with ID " + id + " deleted.");
+            return ResponseEntity.ok("Greeting with ID " + id + " deleted successfully.");
         } else {
             return ResponseEntity.notFound().build();
         }
