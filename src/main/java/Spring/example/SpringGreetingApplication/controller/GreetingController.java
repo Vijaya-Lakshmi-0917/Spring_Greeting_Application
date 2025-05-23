@@ -1,59 +1,17 @@
 package Spring.example.SpringGreetingApplication.controller;
 
+import Spring.example.SpringGreetingApplication.dto.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @RestController
-@RequestMapping("/greeting")
+@RequestMapping("/hello")
 public class GreetingController {
 
-    @Autowired
-    private GreetingService greetingService;
-
-    @GetMapping
-    public ResponseEntity<Greeting> getGreeting() {
-        return greetingService.getGreetingMessage();
-    }
-
-    @PostMapping
-    public ResponseEntity<Greeting> postGreeting() {
-        return greetingService.getGreetingMessage();
-    }
-
-    @PutMapping
-    public ResponseEntity<Greeting> putGreeting() {
-        return greetingService.getGreetingMessage();
-    }
-
-    @DeleteMapping
-    public ResponseEntity<Greeting> deleteGreeting() {
-        return greetingService.getGreetingMessage();
-    }
-
-    static class Greeting {
-        private String message;
-
-        public Greeting(String message) {
-            this.message = message;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-
-        public void setMessage(String message) {
-            this.message = message;
-        }
+    @PostMapping("/post")
+    public ResponseEntity<String> greetUser(@RequestBody User user) {
+        String fullName = user.getFirstName() + " " + user.getLastName();
+        String message = "Hello " + fullName + " from BridgeLabz";
+        return ResponseEntity.ok(message);
     }
 }
-
-@Service
-class GreetingService {
-    public ResponseEntity<GreetingController.Greeting> getGreetingMessage() {
-        GreetingController.Greeting greeting = new GreetingController.Greeting("Hello World");
-        return ResponseEntity.ok(greeting);
-    }
-}
-
