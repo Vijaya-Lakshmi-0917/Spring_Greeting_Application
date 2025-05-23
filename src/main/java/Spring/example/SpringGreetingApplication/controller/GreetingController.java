@@ -37,4 +37,25 @@ public class GreetingController {
         Greeting saved = greetingRepository.save(greeting);
         return ResponseEntity.ok(saved);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Greeting> updateGreeting(@PathVariable Long id, @RequestBody Greeting updatedGreeting) {
+        return greetingRepository.findById(id)
+                .map(existingGreeting -> {
+                    existingGreeting.setMessage(updatedGreeting.getMessage());
+                    greetingRepository.save(existingGreeting);
+                    return ResponseEntity.ok(existingGreeting);
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteGreeting(@PathVariable Long id) {
+        if (greetingRepository.existsById(id)) {
+            greetingRepository.deleteById(id);
+            return ResponseEntity.ok("Greeting with ID " + id + " deleted.");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
