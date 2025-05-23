@@ -49,3 +49,11 @@ public class GreetingController {
     }
 }
 
+@Service
+class GreetingService {
+    public ResponseEntity<GreetingController.Greeting> getGreetingMessage() {
+        GreetingController.Greeting greeting = new GreetingController.Greeting("Hello World");
+        return ResponseEntity.ok(greeting);
+    }
+}
+
